@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 import "./style.css";
 
 import { api } from '../../config';
+import PageLayout from "../../component/PageLayout";
 
 const Login = () => {
   const [id, setId] = useState("");
@@ -49,35 +50,37 @@ const Login = () => {
   }
 
   return (
-    <div className="container">
-      <div className="panel">
-        <div className="wrapper">
-          <input
-            className="input"
-            value={id}
-            onChange={onIdChange}
-            required
-          />
-          <div className="hint">用户名</div>
+    <PageLayout>
+      <div className="container">
+        <div className="panel">
+          <div className="wrapper">
+            <input
+              className="input"
+              value={id}
+              onChange={onIdChange}
+              required
+            />
+            <div className="hint">用户名</div>
+          </div>
+          <div className="wrapper">
+            <input
+              className="input"
+              type={"password"}
+              value={passwd}
+              onChange={onPasswdChange}
+              required
+            />
+            <div className="hint">密码</div>
+          </div>
+          <Button
+            disabled={buttonDisable}
+            className="button"
+            type="primary"
+            onClick={onLoginButtonClick}
+          >登录</Button>
         </div>
-        <div className="wrapper">
-          <input
-            className="input"
-            type={"password"}
-            value={passwd}
-            onChange={onPasswdChange}
-            required
-          />
-          <div className="hint">密码</div>
-        </div>
-        <Button
-          disabled={buttonDisable}
-          className="button"
-          type="primary"
-          onClick={onLoginButtonClick}
-        >登录</Button>
       </div>
-    </div>
+    </PageLayout>
   );
 };
 
