@@ -9,7 +9,7 @@ const Login = () => {
   const [id, setId] = useState("");
   const [passwd, setPasswd] = useState("");
   const [buttonDisable, setButtonDisable] = useState(false);
-  
+
   const onIdChange = (evt) => {
     setId(evt.target.value);
   }
@@ -20,6 +20,7 @@ const Login = () => {
   const onLoginButtonClick = async () => {
 
     console.log('logining');
+    setButtonDisable(true);
     fetch(api.LOGIN_POST, {
       method: 'POST',
       headers: {
@@ -43,6 +44,7 @@ const Login = () => {
           message: '登录失败',
         })
       }
+      setButtonDisable(false);
     }).catch();
   }
 
@@ -69,7 +71,7 @@ const Login = () => {
           <div className="hint">密码</div>
         </div>
         <Button
-          disabled=
+          disabled={buttonDisable}
           className="button"
           type="primary"
           onClick={onLoginButtonClick}
