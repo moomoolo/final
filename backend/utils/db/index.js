@@ -14,4 +14,13 @@ db.getUserRoleStr = async (id) => {
     return res[0]?.user_role;
 }
 
+db.getUserInfoById = async (id) => {
+    const sql = `select user_role, user_name from users where id='${id}';`;
+    const res = await queryPromise(sql);
+    return {
+        roleStr: res[0].user_role ?? '',
+        nameStr: res[0].user_name ?? '',
+    };
+}
+
 module.exports = db;

@@ -47,7 +47,7 @@
     border: #cfcfcf 1px solid;
     border-radius: 3px;
     outline: none;
-    transition: all ease-in-out 0.1s;
+    transition: all ease-in-out 0.2s;
 }
 
 .hint {
@@ -63,7 +63,7 @@
     transition: all ease-in-out 0.1s;
 }
 
-.input:focus {
+.input:focus, .input:hover {
     border: #55A7FF 1px solid;
 }
 

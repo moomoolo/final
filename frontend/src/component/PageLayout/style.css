@@ -15,7 +15,7 @@
     background: linear-gradient(#ffffff, #55A7FF);
 }
 
-.link {
+.link, .name {
     color: #777E90;
     padding: 0 20px 0;
     height: 40px;

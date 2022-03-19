@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import { Button, notification } from "antd";
 import "antd/dist/antd.css";
-import "./style.css";
+import { useSelector ,useDispatch } from "react-redux";
 
+import "./style.css";
 import { api } from '../../config';
 import PageLayout from "../../component/PageLayout";
+import actionType from "../../state/actionType";
+import { Navigate } from "react-router";
 
 const Login = () => {
   const [id, setId] = useState("");
   const [passwd, setPasswd] = useState("");
   const [buttonDisable, setButtonDisable] = useState(false);
+
+  const userInfo = useSelector(state => state.userInfo);
+  const dispatch = useDispatch();
 
   const onIdChange = (evt) => {
     setId(evt.target.value);
@@ -19,8 +25,6 @@ const Login = () => {
   }
 
   const onLoginButtonClick = async () => {
-
-    console.log('logining');
     setButtonDisable(true);
     fetch(api.LOGIN_POST, {
       method: 'POST',
@@ -39,6 +43,10 @@ const Login = () => {
         })
         res.json().then((data) => {
           localStorage.setItem('access_token', data.jwtToken);
+          dispatch({
+            type: actionType.changeUserInfo,
+            payload: data.userInfo,
+          })
         })
       } else {
         notification.open({
@@ -47,6 +55,10 @@ const Login = () => {
       }
       setButtonDisable(false);
     }).catch();
+  }
+
+  if (userInfo) {
+    return <Navigate to={'/'}/>
   }
 
   return (
