@@ -11,7 +11,7 @@ loginRouter.post('/', async (req, res) => {
     if (valid) {
         const userInfo = await getUserInfoById(id);
         const jwtToken = jwt.sign(
-            { id },
+            { id, userInfo },
             jwtSecret,
             { expiresIn: Date.now() +  24 * 360000 }
         );

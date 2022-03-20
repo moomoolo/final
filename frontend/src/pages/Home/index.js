@@ -1,11 +1,11 @@
 import React from 'react'
 
-import PageLayout from '../../component/PageLayout'
+import PageLayoutWithContent from '../../component/PageLayoutWithContent'
 
 export default function Home() {
   return (
-    <PageLayout>
+    <PageLayoutWithContent>
         hh
-    </PageLayout>
+    </PageLayoutWithContent>
   )
 }

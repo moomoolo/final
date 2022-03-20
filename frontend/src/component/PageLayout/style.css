@@ -1,38 +1,3 @@
 .layout {
     min-height: 100vh;
 }
-
-.header {
-    background-color: #ffffff;
-    display: flex;
-    justify-self: flex-start;
-    align-items: center;
-    border-bottom: 1px solid #cfcfcf;
-}
-
-.content {
-    display: flex;
-    background: linear-gradient(#ffffff, #55A7FF);
-}
-
-.link, .name {
-    color: #777E90;
-    padding: 0 20px 0;
-    height: 40px;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.link:hover {
-    color: #777E90;
-    background-color: #F5F4F6;
-}
-
-
-.end {
-    margin-left: auto;
-}

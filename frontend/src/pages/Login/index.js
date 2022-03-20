@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Button, notification } from "antd";
+import { Button, message, notification } from "antd";
 import "antd/dist/antd.css";
 import { useSelector ,useDispatch } from "react-redux";
 
 import "./style.css";
 import { api } from '../../config';
-import PageLayout from "../../component/PageLayout";
 import actionType from "../../state/actionType";
 import { Navigate } from "react-router";
+import PageLayoutWithContent from "../../component/PageLayoutWithContent";
 
 const Login = () => {
   const [id, setId] = useState("");
@@ -17,6 +17,7 @@ const Login = () => {
   const userInfo = useSelector(state => state.userInfo);
   const dispatch = useDispatch();
 
+  // 受控组件
   const onIdChange = (evt) => {
     setId(evt.target.value);
   }
@@ -38,9 +39,7 @@ const Login = () => {
     })
     .then((res) => {
       if (res.status === 200) {
-        notification.open({
-          message: '登录成功',
-        })
+        message.success('登录成功')
         res.json().then((data) => {
           localStorage.setItem('access_token', data.jwtToken);
           dispatch({
@@ -49,9 +48,7 @@ const Login = () => {
           })
         })
       } else {
-        notification.open({
-          message: '登录失败',
-        })
+        message.error('登录失败')
       }
       setButtonDisable(false);
     }).catch();
@@ -62,7 +59,7 @@ const Login = () => {
   }
 
   return (
-    <PageLayout>
+    <PageLayoutWithContent>
       <div className="container">
         <div className="panel">
           <div className="wrapper">
@@ -92,7 +89,7 @@ const Login = () => {
           >登录</Button>
         </div>
       </div>
-    </PageLayout>
+    </PageLayoutWithContent>
   );
 };
 
