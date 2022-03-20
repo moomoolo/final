@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../config');
-const { getUserList } = require('../utils/db');
+const { getUserList, alterUserInfo } = require('../utils/db');
 
 const userRouter = express.Router();
 
@@ -12,8 +12,7 @@ const checkAdmin = async (req, res, next) => {
         if (err) {
             res.status(401).end();
         } else {
-            console.log(rawToken);
-            if (rawToken.userInfo.roleStr === 'admin') {
+            if (rawToken.userInfo.role_str === 'admin') {
                 next();
             } else {
                 res.status(401).end();
@@ -27,6 +26,17 @@ userRouter.use(checkAdmin);
 userRouter.get('/list', async (req, res) => {
     const userList = await getUserList();
     res.status(200).json(userList).end();
+})
+
+userRouter.post('/alter', async (req, res) => {
+    const userInfo = req.body;
+    console.log(userInfo);
+    try {
+        const _ = await alterUserInfo(userInfo);
+        res.status(200).end();
+    } catch(err) {
+        res.status(400).end();
+    }
 })
 
 module.exports = userRouter;

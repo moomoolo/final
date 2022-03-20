@@ -26,7 +26,7 @@ db.getUserList = async () => {
     return res;
 }
 
-db.addUser = async (id, passwd, name_str, address, role_str) => {
+db.addUser = async ({ id, passwd, name_str, address, role_str }) => {
     const querySql = `select * from users where id='${id}';`;
     const res = await queryPromise(querySql);
     if (res.length > 0) {
@@ -41,15 +41,17 @@ db.addUser = async (id, passwd, name_str, address, role_str) => {
     }
 }
 
-db.alterUserInfo = async (id, passwd, name_str, address, role_str) => {
+db.alterUserInfo = async ({ id, passwd, name_str, address, role_str }) => {
+    console.log(id, passwd, role_str, name_str, address);
     const sql = `update users set 
         passwd = '${passwd}',
         role_str = '${role_str}',
         name_str = '${name_str}',
-        address = '${address}',
+        address = '${address}'
         where id = '${id}';
     `;
-    const res = queryPromise(sql);
+    const res = await queryPromise(sql);
+    return res;
 }
 
 module.exports = db;

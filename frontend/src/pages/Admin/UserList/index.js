@@ -1,4 +1,4 @@
-import { Button, Form, Modal, Input, Table, Tag, Tooltip } from "antd";
+import { Button, Form, Modal, Input, Table, Tag, Tooltip, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { api } from "../../../config";
 
@@ -29,6 +29,8 @@ const renderPasswd = (passwd) => {
     )
 }
 
+
+let refreshOutside;
 const renderOper = (text, record) => {
     const alter = () => {
         const info = { ...record }
@@ -41,11 +43,11 @@ const renderOper = (text, record) => {
                     wrapperCol={{ span: 24 }}
                 >
                     <Form.Item label={'ID'}>
-                        <Input value={info.id} disabled />
+                        <Input defaultValue={info.id} disabled />
                     </Form.Item>
                     <Form.Item label={'姓名'}>
                         <Input
-                            value={info.name_str}
+                            defaultValue={info.name_str}
                             onChange={(evt) => {
                                 info.name_str = evt.target.value;
                             }}
@@ -53,24 +55,39 @@ const renderOper = (text, record) => {
                     </Form.Item>
                     <Form.Item label={'密码'}>
                         <Input.Password
-                            value={info.passwd}
+                            defaultValue={info.passwd}
                             onChange={(evt) => {
                                 info.passwd = evt.target.value;
                             }}
                         />
                     </Form.Item>
                     <Form.Item label={'网络地址'}>
-                        <Input value={info.address} disabled/>
+                        <Input defaultValue={info.address} disabled/>
                     </Form.Item>
                     <Form.Item label={'角色'}>
-                        <Input value={roleMap[info.role_str]} disabled/>
+                        <Input defaultValue={roleMap[info.role_str]} disabled/>
                     </Form.Item>
                 </Form>
             ),
             okText: '提交',
             cancelText: '取消',
             onOk: () => {
-                
+                fetch(api.ALTER_USER_POST, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authentication': 'Bearer ' + localStorage.getItem('access_token')
+                    },
+                    body: JSON.stringify(info)
+                }).then((res) => {
+                    if (res.status === 200) {
+                        message.success('修改成功');
+                        refreshOutside();
+                    } else {
+                        message.error('修改失败，请重试');
+                    }
+                })
+                message.info('已提交，请稍等');
             }
         })
     }
@@ -145,6 +162,9 @@ export default function UserList() {
             }
         })
     }
+
+    // 设置refreshOutside用于在修改和删除时刷新页面
+    refreshOutside = refresh;
 
     useEffect(() => {
         refresh();

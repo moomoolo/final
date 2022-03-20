@@ -33,15 +33,12 @@ loginRouter.post('/', async (req, res) => {
 
 loginRouter.get('/validate', async (req, res) => {
     const authToken = req.get('Authentication');
-    console.log(authToken);
     if (authToken) {
         const token = authToken.split(' ')[1];
         jwt.verify(token, jwtSecret, async (err, rawToken) => {
             if (err) {
-                console.log('wrong');
                 res.status(401).end();
             } else if (Date.now() < new Date(rawToken.exp)) {
-                console.log(rawToken);
                 const userInfo = await getUserInfoById(rawToken.id);
                 res.status(200).json({ userInfo }).end();
             } else {
