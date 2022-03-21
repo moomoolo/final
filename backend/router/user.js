@@ -1,7 +1,9 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../config');
-const { getUserList, alterUserInfo, deleteUser } = require('../utils/db');
+const { getUserList, alterUserInfo, deleteUser, checkUser, addUser } = require('../utils/db');
+const { addNewAccount } = require('../utils/eth');
+const Web3 = require('web3');
 
 const userRouter = express.Router();
 
@@ -49,8 +51,23 @@ userRouter.post('/delete', async (req, res) => {
 })
 
 userRouter.post('/add', async (req, res) => {
-    const userInfo = req.body;
+    let userInfo = req.body;
     try {
+        const exist = checkUser(userInfo);
+        if (exist) {
+            res.status(400).json({ msg: 'ID已存在' }).end();
+        } else {
+            // 创建geth账户新密码
+            const eth_passwd = Web3.utils.randomHex(40);
+            const address = addNewAccount(ethPasswd);
+            let userInfo = {
+                ...userInfo,
+                eth_passwd,
+                address,
+            };
+            const _ = addUser(userInfo);
+            res.status(200).end();
+        }
 
     } catch(err) {
         res.status(400).end();

@@ -26,21 +26,6 @@ db.getUserList = async () => {
     return res;
 }
 
-db.addUser = async ({ id, passwd, name_str, address, role_str }) => {
-    const querySql = `select * from users where id='${id}';`;
-    const res = await queryPromise(querySql);
-    if (res.length > 0) {
-        return {
-            result: false,
-            msg: 'id已存在'
-        };
-    } else {
-        const insertSql = `insert into users values('${id}', '${passwd}', '${name_str}', '${address}', '${role_str}')`;
-        const res = await queryPromise(querySql);
-        return { result: true };
-    }
-}
-
 db.alterUserInfo = async ({ id, passwd, name_str }) => {
     const sql = `update users set 
         passwd = '${passwd}',
@@ -55,6 +40,27 @@ db.deleteUser = async ({ id }) => {
     const sql = `delete from users where id = '${id}';`;
     const res = await queryPromise(sql);
     return res;
+}
+
+
+// 检查用户是否存在
+db.checkUser = async({ id }) => {
+    const sql = `select * from users where id = '${id}'`;
+    const res = await queryPromise(sql);
+    return res.length > 0;
+}
+
+// 需配合checkUser使用
+db.addUser = async ({ id, passwd, role_str, name_str, address, eth_passwd }) => {
+    const sql = `insert into users values (
+        '${id}',
+        '${passwd}',
+        '${name_str}',
+        '${address}',
+        '${role_str}',
+        '${eth_passwd}'
+    );`
+    const res = await queryPromise(sql);
 }
 
 module.exports = db;
