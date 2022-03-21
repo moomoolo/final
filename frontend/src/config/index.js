@@ -7,6 +7,7 @@ const api = {
     USER_LIST_GET: BASE_URL + '/user/list',
     ALTER_USER_POST: BASE_URL + '/user/alter',
     DELETE_USER_POST: BASE_URL + '/user/delete',
+    ADD_USER_POST: BASE_URL + '/user/add',
 };
 
 export { api };

@@ -1,4 +1,4 @@
-import { Button, Form, Modal, Input, Table, Tag, Tooltip, message } from "antd";
+import { Button, Form, Modal, Input, Table, Tag, Tooltip, message, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { api } from "../../../config";
 
@@ -201,7 +201,61 @@ export default function UserList() {
     }, [setUserList]);
 
 
-    
+    const onAddUser = () => {
+        const userInfo = {};
+        Modal.confirm({
+            icon: null,
+            content: (
+                <Form
+                    wrapperCol={{ span: 24 }}
+                    labelCol={{ span: 4 }}
+                >
+                    <Form.Item label={'ID'} >
+                        <Input onChange={(evt) => {userInfo.id = evt.target.value}} />
+                    </Form.Item>
+                    <Form.Item label={'密码'}>
+                        <Input
+                            type={'password'}
+                            onChange={(evt) => {userInfo.passwd = evt.target.value}}
+                        />
+                    </Form.Item>
+                    <Form.Item label={'姓名'}>
+                        <Input onChange={(evt) => {userInfo.name_str = evt.target.value}} />
+                    </Form.Item>
+                    <Form.Item label={'角色'} >
+                        <Select
+                            onChange={(role_str) => {
+                                userInfo.role_str = role_str;
+                            }}
+                        >   
+                            <Select.Option value='admin'>管理员</Select.Option>
+                            <Select.Option value='postman'>快递员</Select.Option>
+                        </Select>
+                    </Form.Item>
+                </Form>
+            ),
+            onOk: () => {
+                fetch(api.ADD_USER_POST, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authentication': 'Bearer ' + localStorage.getItem('access_token')
+                    },
+                    body: JSON.stringify(userInfo)
+                }).then((res) => {
+                    if (res.status === 200) {
+                        message.success('新增成功');
+                        refresh();
+                    } else {
+                        res.json().then((data) => {
+                            message.error('新增失败 ' + data.msg);
+                        })
+                    }
+                })
+                message.info('已提交，请稍等');
+            }
+        })
+    }
 
     return (
         <div className="container">
@@ -217,6 +271,7 @@ export default function UserList() {
                 <Button
                     type="primary"
                     className="add_button"
+                    onClick={onAddUser}
                 >新增</Button>
             </div>
         </div>
