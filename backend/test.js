@@ -1,7 +1,9 @@
 const { getUserRole } = require('./utils/db');
+const { addNewAccount } = require('./utils/eth');
+
 
 (async () => {
     console.log(
-        await getUserRole('test_id')
+        await addNewAccount('test_pass')
     );
 })();

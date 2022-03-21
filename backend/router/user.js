@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../config');
-const { getUserList, alterUserInfo } = require('../utils/db');
+const { getUserList, alterUserInfo, deleteUser } = require('../utils/db');
 
 const userRouter = express.Router();
 
@@ -30,10 +30,28 @@ userRouter.get('/list', async (req, res) => {
 
 userRouter.post('/alter', async (req, res) => {
     const userInfo = req.body;
-    console.log(userInfo);
     try {
         const _ = await alterUserInfo(userInfo);
         res.status(200).end();
+    } catch(err) {
+        res.status(400).end();
+    }
+})
+
+userRouter.post('/delete', async (req, res) => {
+    const userInfo = req.body;
+    try {
+        const _ = await deleteUser(userInfo);
+        res.status(200).end();
+    } catch(err) {
+        res.status(400).end();
+    }
+})
+
+userRouter.post('/add', async (req, res) => {
+    const userInfo = req.body;
+    try {
+
     } catch(err) {
         res.status(400).end();
     }

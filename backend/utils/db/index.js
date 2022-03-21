@@ -21,7 +21,7 @@ db.getUserInfoById = async (id) => {
 }
 
 db.getUserList = async () => {
-    const sql = `select * from users;`;
+    const sql = `select id, name_str, role_str, address, passwd from users;`;
     const res = await queryPromise(sql);
     return res;
 }
@@ -41,15 +41,18 @@ db.addUser = async ({ id, passwd, name_str, address, role_str }) => {
     }
 }
 
-db.alterUserInfo = async ({ id, passwd, name_str, address, role_str }) => {
-    console.log(id, passwd, role_str, name_str, address);
+db.alterUserInfo = async ({ id, passwd, name_str }) => {
     const sql = `update users set 
         passwd = '${passwd}',
-        role_str = '${role_str}',
         name_str = '${name_str}',
-        address = '${address}'
         where id = '${id}';
     `;
+    const res = await queryPromise(sql);
+    return res;
+}
+
+db.deleteUser = async ({ id }) => {
+    const sql = `delete from users where id = '${id}';`;
     const res = await queryPromise(sql);
     return res;
 }

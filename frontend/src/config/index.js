@@ -6,6 +6,7 @@ const api = {
     VALIDATE_TOKEN_GET: BASE_URL + '/login/validate',
     USER_LIST_GET: BASE_URL + '/user/list',
     ALTER_USER_POST: BASE_URL + '/user/alter',
+    DELETE_USER_POST: BASE_URL + '/user/delete',
 };
 
 export { api };

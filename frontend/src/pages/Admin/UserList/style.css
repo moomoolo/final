@@ -2,11 +2,20 @@
     margin: 20px 50px 20px;
 }
 
-.table {
+.wrapper {
     width: 100%;
     height: 100%;
     padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
-.table div {
+.table {
+    background-color: #fff;
+    width: 100%;
+}
+
+.add_button {
+    margin: 20px;
 }

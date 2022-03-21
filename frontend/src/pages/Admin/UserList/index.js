@@ -32,7 +32,7 @@ const renderPasswd = (passwd) => {
 
 let refreshOutside;
 const renderOper = (text, record) => {
-    const alter = () => {
+    const alterUser = () => {
         const info = { ...record }
         // 显示编辑表单
         Modal.confirm({
@@ -91,14 +91,44 @@ const renderOper = (text, record) => {
             }
         })
     }
+    const deleteUser = () => {
+        const info = { ...record };
+        Modal.confirm({
+            icon: null,
+            content: `是否删除用户 ${info.id}`,
+            okType: 'danger',
+            okText: '删除',
+            onOk: () => {
+                fetch(api.DELETE_USER_POST, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authentication': 'Bearer ' + localStorage.getItem('access_token')
+                    },
+                    body: JSON.stringify(info)
+                }).then(res => {
+                    if (res.status === 200) {
+                        message.success('删除成功');
+                        refreshOutside();
+                    } else {
+                        message.error('删除失败');
+                    }
+                });
+                message.info('已提交，请稍等');
+            }
+        })
+    }
     return (
         <span>
             <Button
                 type="primary"
                 style={{margin: '0 10px 0 0'}}
-                onClick={alter}
+                onClick={alterUser}
             >修改</Button>
-            <Button type="danger">删除</Button>
+            <Button
+                type="danger"
+                onClick={deleteUser}
+            >删除</Button>
         </span>
     )
 }
@@ -170,16 +200,25 @@ export default function UserList() {
         refresh();
     }, [setUserList]);
 
+
+    
+
     return (
         <div className="container">
-            <Table
-                className="table"
-                size="middle"
-                columns={columns}
-                dataSource={userList}
-            >
+            <div className="wrapper">
+                <Table
+                    className="table"
+                    size="middle"
+                    columns={columns}
+                    dataSource={userList}
+                >
 
-            </Table>
+                </Table>
+                <Button
+                    type="primary"
+                    className="add_button"
+                >新增</Button>
+            </div>
         </div>
     )
 }
