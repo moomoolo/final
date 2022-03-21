@@ -7,6 +7,7 @@ import PageContent from '../../component/PageContent'
 import PageHeader from '../../component/PageHeader'
 import PageLayout from '../../component/PageLayout'
 import PageSider from '../../component/PageSider'
+import StationList from './StationList'
 import UserList from './UserList'
 
 export default function Admin() {
@@ -19,12 +20,16 @@ export default function Admin() {
                     <Menu.Item key={'user_list'}>
                         <Link to='user_list'>用户列表</Link>
                     </Menu.Item>
+                    <Menu.Item key={'station_list'}>
+                        <Link to='station_list'>站点列表</Link>
+                    </Menu.Item>
                 </Menu>
             </PageSider>
             <PageContent>
                 <Routes>
                     <Route index element={<Navigate to={'user_list'} />} />
                     <Route path='user_list' element={<UserList />} />
+                    <Route path='station_list' element={<StationList />} />
                 </Routes>
             </PageContent>
           </Layout>
