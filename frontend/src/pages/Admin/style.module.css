@@ -1,0 +1,38 @@
+.wrapper_layout {
+    display: flex;
+}
+
+.sider {
+    width: 200px;
+    background-color: #fff;
+    box-shadow: #cfcfcf 1px 0 1px;
+}
+
+.content {
+    display: flex;
+    background: linear-gradient(#ffffff, #55A7FF);
+}
+
+@media (max-width: 700px) {
+    .wrapper_layout {
+        flex-direction: column !important;
+    }
+    
+    .sider {
+        display: block;
+        max-width: 100% !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        flex: 0 0 0 !important;
+        box-shadow: #cfcfcf 0 1px 1px;
+    }
+
+    .sider li {
+        display: flex;
+        justify-content: center;
+    }
+
+    .content {
+        width: 100% !important;
+    }
+}

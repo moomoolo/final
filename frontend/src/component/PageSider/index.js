@@ -9,7 +9,6 @@ export default function PageSider({ children }) {
   return (
     <Sider
         className='sider'
-        width={240}
     >{children}</Sider>
   )
 }

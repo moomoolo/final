@@ -11,6 +11,8 @@ import PageSider from '../../component/PageSider'
 import StationList from './StationList'
 import UserList from './UserList'
 
+import styles from './style.module.css';
+
 export default function Admin() {
   const userInfo = useSelector(state => state.userInfo);
   if (userInfo.role_str !== 'admin') {
@@ -19,8 +21,8 @@ export default function Admin() {
   return (
       <PageLayout>
           <PageHeader />
-          <Layout>
-            <PageSider>
+          <Layout className={styles.wrapper_layout}>
+            <Layout.Sider className={styles.sider}>
                 <Menu>
                     <Menu.Item key={'user_list'}>
                         <Link to='user_list'>用户列表</Link>
@@ -29,14 +31,14 @@ export default function Admin() {
                         <Link to='station_list'>站点列表</Link>
                     </Menu.Item>
                 </Menu>
-            </PageSider>
-            <PageContent>
+            </Layout.Sider>
+            <Layout.Content className={styles.content}>
                 <Routes>
                     <Route index element={<Navigate to={'user_list'} />} />
                     <Route path='user_list' element={<UserList />} />
                     <Route path='station_list' element={<StationList />} />
                 </Routes>
-            </PageContent>
+            </Layout.Content>
           </Layout>
       </PageLayout>
   )

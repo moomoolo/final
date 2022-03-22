@@ -199,6 +199,7 @@ export default function StationList() {
     <div className={styles.wrapper}>
       <Table
         className={styles.table}
+        scroll={{ x: 700 }}
         size="middle"
         columns={columns}
         dataSource={stationList}

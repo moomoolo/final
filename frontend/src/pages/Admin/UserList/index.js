@@ -329,6 +329,7 @@ export default function UserList() {
   return (
     <div className={styles.wrapper}>
       <Table
+        scroll={{ x: 700 }}
         className={styles.table}
         size="middle"
         columns={columns}
