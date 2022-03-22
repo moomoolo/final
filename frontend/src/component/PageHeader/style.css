@@ -28,3 +28,17 @@
 .end {
     margin-left: auto;
 }
+
+.name:hover {
+    background-color: #F5F4F6;
+}
+
+
+.logout_button {
+    margin-left: 10px;
+    display: none !important;
+}
+
+.name:hover .logout_button {
+    display: block !important;
+}

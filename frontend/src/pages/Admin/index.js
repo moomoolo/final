@@ -1,6 +1,7 @@
 
 import { Layout, Menu } from 'antd'
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Navigate, Route, Routes } from 'react-router'
 import { Link } from 'react-router-dom'
 import PageContent from '../../component/PageContent'
@@ -11,6 +12,10 @@ import StationList from './StationList'
 import UserList from './UserList'
 
 export default function Admin() {
+  const userInfo = useSelector(state => state.userInfo);
+  if (userInfo.role_str !== 'admin') {
+      return <Navigate to={'/'}/>
+  }
   return (
       <PageLayout>
           <PageHeader />

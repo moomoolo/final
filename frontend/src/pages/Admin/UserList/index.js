@@ -10,9 +10,10 @@ import {
   Select,
 } from "antd";
 import React, { useEffect, useState } from "react";
+import { getHeader, renderHashInTable } from "../../../common";
 import { api } from "../../../config";
 
-import "./style.css";
+import styles from "./style.module.css";
 
 const roleMap = {
   admin: "管理员",
@@ -134,6 +135,8 @@ const renderOper = (text, record) => {
   );
 };
 
+let stationListOutside;
+
 const columns = [
   {
     title: "ID",
@@ -161,6 +164,12 @@ const columns = [
     title: "网络地址",
     dataIndex: "address",
     key: "address",
+    render: renderHashInTable,
+  },
+  {
+    title: "站点",
+    dataIndex: "station",
+    key: "station",
   },
   {
     title: "操作",
@@ -170,8 +179,11 @@ const columns = [
   },
 ];
 
+
 export default function UserList() {
   const [userList, setUserList] = useState(null);
+  const [stationList, setStationList] = useState(null);
+  stationListOutside = stationList;
 
   const refresh = () => {
     fetch(api.USER_LIST_GET, {
@@ -190,6 +202,21 @@ export default function UserList() {
         });
       }
     });
+    fetch(api.STATION_LIST_GET, {
+        method: "GET",
+        headers: getHeader(),
+      }).then((res) => {
+        if (res.status === 200) {
+          res.json().then((data) => {
+            data.forEach((item) => {
+              item.key = item.id;
+            });
+            setStationList(data);
+          });
+        } else {
+          message.error("获取站点列表失败");
+        }
+      });
   };
 
   // 设置refreshOutside用于在修改和删除时刷新页面
@@ -263,14 +290,14 @@ export default function UserList() {
   };
 
   return (
-    <div className="wrapper">
+    <div className={styles.wrapper}>
       <Table
-        className="table"
+        className={styles.table}
         size="middle"
         columns={columns}
         dataSource={userList}
       ></Table>
-      <Button type="primary" className="add_button" onClick={onAddUser}>
+      <Button type="primary" className={styles.add_button} onClick={onAddUser}>
         新增
       </Button>
     </div>

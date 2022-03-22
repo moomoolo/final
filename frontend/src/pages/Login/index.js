@@ -3,7 +3,7 @@ import { Button, message, notification } from "antd";
 import "antd/dist/antd.css";
 import { useSelector ,useDispatch } from "react-redux";
 
-import "./style.css";
+import styles from './style.module.css';
 import { api } from '../../config';
 import actionType from "../../state/actionType";
 import { Navigate } from "react-router";
@@ -54,36 +54,36 @@ const Login = () => {
     }).catch();
   }
 
-  if (userInfo) {
+  if (userInfo.role_str) {
     return <Navigate to={'/'}/>
   }
 
   return (
     <PageLayoutWithContent>
-      <div className="container">
-        <div className="panel">
-          <div className="wrapper">
+      <div className={styles.container}>
+        <div className={styles.panel}>
+          <div className={styles.wrapper}>
             <input
-              className="input"
+              className={styles.input}
               value={id}
               onChange={onIdChange}
               required
             />
-            <div className="hint">用户名</div>
+            <div className={styles.hint}>用户名</div>
           </div>
-          <div className="wrapper">
+          <div className={styles.wrapper}>
             <input
-              className="input"
+              className={styles.input}
               type={"password"}
               value={passwd}
               onChange={onPasswdChange}
               required
             />
-            <div className="hint">密码</div>
+            <div className={styles.hint}>密码</div>
           </div>
           <Button
             disabled={buttonDisable}
-            className="button"
+            className={styles.button}
             type="primary"
             onClick={onLoginButtonClick}
           >登录</Button>

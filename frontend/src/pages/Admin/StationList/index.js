@@ -2,8 +2,8 @@ import { Button, message, Modal, Table, Form, Input } from "antd";
 import React, { useEffect, useState } from "react";
 import { api } from "../../../config";
 
-import { getHeader } from "../../../common";
-import "./style.css";
+import { getHeader, renderHashInTable } from "../../../common";
+import styles from "./style.module.css";
 
 let refreshOutside;
 
@@ -102,6 +102,7 @@ const columns = [
     title: "ID",
     dataIndex: "id",
     key: "id",
+    render: renderHashInTable
   },
   {
     title: "名称",
@@ -127,10 +128,7 @@ export default function StationList() {
   const refresh = () => {
     fetch(api.STATION_LIST_GET, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authentication: "Bearer " + localStorage.getItem("access_token"),
-      },
+      headers: getHeader(),
     }).then((res) => {
       if (res.status === 200) {
         res.json().then((data) => {
@@ -198,14 +196,14 @@ export default function StationList() {
 
 
   return (
-    <div className="wrapper">
+    <div className={styles.wrapper}>
       <Table
-        className="table"
+        className={styles.table}
         size="middle"
         columns={columns}
         dataSource={stationList}
       ></Table>
-      <Button type="primary" className="add_button" onClick={onAddStation}>
+      <Button type="primary" className={styles.button} onClick={onAddStation}>
         新增
       </Button>
     </div>

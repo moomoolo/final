@@ -1,15 +1,26 @@
 import React from "react";
-import { Layout } from "antd";
+import { Button, Layout } from "antd";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import './style.css';
+import actionType from "../../state/actionType";
 
 const { Header } = Layout;
 
 export default function PageHeader() {
   const userInfo = useSelector((state) => state.userInfo);
   const roleStr = userInfo?.role_str;
+  const dispatch = useDispatch();
+  
+  const logout = () => {
+    localStorage.removeItem('access_token');
+    dispatch({
+        type: actionType.changeUserInfo,
+        payload: {}
+    });
+  }
+
   return (
     <Header className="header">
       <Link className="link start" to={"/"}>
@@ -20,12 +31,21 @@ export default function PageHeader() {
           管理
         </Link>
       )}
-      {!userInfo && (
+      {!roleStr && (
         <Link className="link end" to={"/login"}>
           登录
         </Link>
       )}
-      {userInfo && <div className="name end">{userInfo.name_str}</div>}
+      {roleStr && 
+        <div className="name end">
+            <span>{userInfo.name_str}</span>
+            <Button
+                size="small"
+                className="logout_button"
+                type="danger"
+                onClick={logout}
+            >登出</Button>
+        </div>}
     </Header>
   );
 }

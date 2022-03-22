@@ -21,15 +21,16 @@ user.getUserInfoById = async (id) => {
 }
 
 user.getUserList = async () => {
-    const sql = `select id, name_str, role_str, address, passwd from users;`;
+    const sql = `select id, name_str, role_str, address, passwd, station from users;`;
     const res = await queryPromise(sql);
     return res;
 }
 
-user.alterUserInfo = async ({ id, passwd, name_str }) => {
+user.alterUserInfo = async ({ id, passwd, name_str, station }) => {
     const sql = `update users set 
         passwd = '${passwd}',
         name_str = '${name_str}',
+        station = '${station}'
         where id = '${id}';
     `;
     const res = await queryPromise(sql);

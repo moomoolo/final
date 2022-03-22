@@ -5,7 +5,7 @@ import reducer from './reducer';
 
 const initialState = {
     // 存储用户登录态
-    userInfo: null,
+    userInfo: {},
 };
 
 // 验证当前token是否有效
