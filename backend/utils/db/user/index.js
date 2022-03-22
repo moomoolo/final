@@ -52,14 +52,15 @@ user.checkUser = async({ id }) => {
 }
 
 // 需配合checkUser使用
-user.addUser = async ({ id, passwd, role_str, name_str, address, eth_passwd }) => {
+user.addUser = async ({ id, passwd, role_str, name_str, address, eth_passwd, station }) => {
     const sql = `insert into users values (
         '${id}',
         '${passwd}',
         '${name_str}',
         '${address}',
         '${role_str}',
-        '${eth_passwd}'
+        '${eth_passwd}',
+        '${station}'
     );`
     const res = await queryPromise(sql);
 }

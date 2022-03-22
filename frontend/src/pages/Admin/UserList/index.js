@@ -17,11 +17,13 @@ import styles from "./style.module.css";
 
 const roleMap = {
   admin: "管理员",
+  postman: "邮差"
 };
 
 const renderRole = (role) => {
   const roleEleMap = {
     admin: <Tag color={"red"}>管理员</Tag>,
+    postman: <Tag color={"green"}>邮差</Tag>
   };
   return <span>{roleEleMap[role]}</span>;
 };
@@ -68,6 +70,20 @@ const renderOper = (text, record) => {
           <Form.Item label={"角色"}>
             <Input defaultValue={roleMap[info.role_str]} disabled />
           </Form.Item>
+          <Form.Item label={"站点"}>
+            <Select
+              defaultValue={info.station}
+              onChange={(station) => {
+                info.station = station;
+              }}
+            >
+              {
+                  stationListOutside.map((item) => {
+                      return <Select.Option value={item.id}>{item.name_str}</Select.Option>
+                  })
+              }
+            </Select>
+          </Form.Item>
         </Form>
       ),
       okText: "提交",
@@ -75,10 +91,7 @@ const renderOper = (text, record) => {
       onOk: () => {
         fetch(api.ALTER_USER_POST, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authentication: "Bearer " + localStorage.getItem("access_token"),
-          },
+          headers:getHeader(),
           body: JSON.stringify(info),
         }).then((res) => {
           if (res.status === 200) {
@@ -137,6 +150,15 @@ const renderOper = (text, record) => {
 
 let stationListOutside;
 
+const renderUserStation = (station) => {
+    const stationName = stationListOutside.filter((item) => {
+        return item.id === station;
+    })[0]?.name_str ?? '';
+    return (
+        <span>{stationName}</span>
+    )
+} 
+
 const columns = [
   {
     title: "ID",
@@ -170,6 +192,7 @@ const columns = [
     title: "站点",
     dataIndex: "station",
     key: "station",
+    render: renderUserStation
   },
   {
     title: "操作",
@@ -181,17 +204,13 @@ const columns = [
 
 
 export default function UserList() {
-  const [userList, setUserList] = useState(null);
-  const [stationList, setStationList] = useState(null);
-  stationListOutside = stationList;
+  const [userList, setUserList] = useState([]);
+  const [stationList, setStationList] = useState([]);
 
   const refresh = () => {
     fetch(api.USER_LIST_GET, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authentication: "Bearer " + localStorage.getItem("access_token"),
-      },
+      headers: getHeader(),
     }).then((res) => {
       if (res.status === 200) {
         res.json().then((data) => {
@@ -221,6 +240,8 @@ export default function UserList() {
 
   // 设置refreshOutside用于在修改和删除时刷新页面
   refreshOutside = refresh;
+  console.log(userList, stationList);
+  stationListOutside = stationList;
 
   useEffect(() => {
     refresh();
@@ -260,9 +281,25 @@ export default function UserList() {
                 userInfo.role_str = role_str;
               }}
             >
-              <Select.Option value="admin">管理员</Select.Option>
-              <Select.Option value="postman">快递员</Select.Option>
+              {
+                Object.entries(roleMap).map((entry) => {
+                    return <Select.Option value={entry[0]}>{entry[1]}</Select.Option>
+                })
+              }
             </Select>
+          </Form.Item>
+          <Form.Item label={"站点"}>
+              <Select
+                onChange={(station) => {
+                    userInfo.station = station;
+                }}
+              >
+                  {
+                      stationListOutside.map((item) => {
+                          return <Select.Option value={item.id}>{item.name_str}</Select.Option>
+                      })
+                  }
+              </Select>
           </Form.Item>
         </Form>
       ),
