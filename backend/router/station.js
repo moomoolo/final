@@ -2,7 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../config');
 
-const { getStationList } = require('../utils/db');
+const { getStationList, addNewStation, alterStation,deleteStation } = require('../utils/db');
 
 const stationRouter = express.Router();
 
@@ -26,10 +26,42 @@ stationRouter.use(checkAdmin);
 
 stationRouter.get('/list', async (req, res) => {
     try {
-        const list = awati getStationList();
+        const list = await getStationList();
         res.status(200).json(list).end();
     } catch(err) {
         res.status(400).end();
+    }
+})
+
+
+stationRouter.post('/add', async (req, res) => {
+    const stationInfo = req.body;
+    try {
+        const _ = await addNewStation(stationInfo);
+        res.status(200).end();
+    } catch(err) {
+        res.status(400).json(err).end();
+    }
+})
+
+stationRouter.post('/alter', async (req, res) => {
+    const stationInfo = req.body;
+    console.log(stationInfo);
+    try {
+        const _  = await alterStation(stationInfo);
+        res.status(200).end();
+    } catch(err) {
+        res.status(400).json(err).end();
+    }
+})
+
+stationRouter.post('/delete', async (req, res) => {
+    const stationInfo = req.body;
+    try {
+        const _ = await deleteStation(stationInfo);
+        res.status(200).end();
+    } catch(err) {
+        res.status(400).json(err).end();
     }
 })
 

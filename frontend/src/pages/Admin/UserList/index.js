@@ -186,7 +186,6 @@ export default function UserList() {
           data.forEach((item) => {
             item.key = item.id;
           });
-          console.log(data);
           setUserList(data);
         });
       }
@@ -198,7 +197,7 @@ export default function UserList() {
 
   useEffect(() => {
     refresh();
-  }, [setUserList]);
+  }, []);
 
   const onAddUser = () => {
     const userInfo = {};
