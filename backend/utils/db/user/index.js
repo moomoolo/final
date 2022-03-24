@@ -65,4 +65,13 @@ user.addUser = async ({ id, passwd, role_str, name_str, address, eth_passwd, sta
     const res = await queryPromise(sql);
 }
 
+user.getUserEthInfoById = async (id) => {
+    console.log('getting eth info');
+    const sql = `select address, eth_passwd from users where id = '${id}';`;
+    console.log(sql);
+    const res = await queryPromise(sql);
+    console.log(res)
+    return res[0];
+}
+
 module.exports = user;

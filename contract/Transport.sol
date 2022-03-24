@@ -79,6 +79,8 @@ contract Transport {
         phoneToOrder[senderPhone].push(order);
         phoneToOrder[recieverPhone].push(order);
         // TODO: 插入链表
+
+        emit NewOrder(orderHash);
     }
 
 
