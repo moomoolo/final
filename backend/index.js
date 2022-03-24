@@ -4,6 +4,7 @@ const cors = require('cors');
 const loginRouter = require('./router/login');
 const userRouter = require('./router/user');
 const stationRouter = require('./router/station');
+const orderRouter = require('./router/order');
 
 const PORT = 9527;
 
@@ -16,6 +17,8 @@ app.use(express.json());
 app.use('/login', loginRouter);
 app.use('/user', userRouter);
 app.use('/station', stationRouter);
+app.use('/order', orderRouter);
+
 
 app.listen(PORT, () => {
     console.log(`listening on ${PORT}`);

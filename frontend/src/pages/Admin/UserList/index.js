@@ -44,7 +44,7 @@ const renderOper = (text, record) => {
     Modal.confirm({
       icon: null,
       content: (
-        <Form labelCol={{ span: 4 }} wrapperCol={{ span: 24 }}>
+        <Form labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
           <Form.Item label={"ID"}>
             <Input defaultValue={info.id} disabled />
           </Form.Item>
@@ -252,7 +252,7 @@ export default function UserList() {
     Modal.confirm({
       icon: null,
       content: (
-        <Form wrapperCol={{ span: 24 }} labelCol={{ span: 4 }}>
+        <Form wrapperCol={{ span: 16 }} labelCol={{ span: 6 }}>
           <Form.Item label={"ID"}>
             <Input
               onChange={(evt) => {
@@ -261,7 +261,7 @@ export default function UserList() {
             />
           </Form.Item>
           <Form.Item label={"密码"}>
-            <Input
+            <Input.Password
               type={"password"}
               onChange={(evt) => {
                 userInfo.passwd = evt.target.value;

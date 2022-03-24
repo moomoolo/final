@@ -7,6 +7,7 @@ import globalStore from './state/globalStore';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Admin from './pages/Admin';
+import Postman from './pages/Postman';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/admin/*' element={<Admin />} />
+        <Route path='/postman/*' element={<Postman />} />
       </Routes>
     </Provider>
   );

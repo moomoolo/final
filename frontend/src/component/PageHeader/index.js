@@ -31,6 +31,11 @@ export default function PageHeader() {
           管理
         </Link>
       )}
+      {roleStr === 'postman' && (
+          <Link className="link start" to={"/postman"}>
+              操作
+          </Link>
+      )}
       {!roleStr && (
         <Link className="link end" to={"/login"}>
           登录

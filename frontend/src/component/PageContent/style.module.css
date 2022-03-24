@@ -1,4 +1,8 @@
 .content {
     display: flex;
+    padding: 5px 0 5px;
+    justify-content: center;
+    align-items: center;
     background: linear-gradient(#ffffff, #55A7FF);
+    overflow: auto;
 }

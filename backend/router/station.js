@@ -22,9 +22,23 @@ const checkAdmin = async (req, res, next) => {
     })
 }
 
-stationRouter.use(checkAdmin);
+const checkAdminOrPostman = async (req, res, next) => {
+    const authToken = req.get('Authentication');
+    const token = authToken.split(' ')[1];
+    jwt.verify(token, jwtSecret, (err, rawToken) => {
+        if (err) {
+            res.status(401).end();
+        } else {
+            if (rawToken.userInfo.role_str === 'admin' || rawToken.userInfo.role_str === 'postman') {
+                next();
+            } else {
+                res.status(401).end();
+            }
+        }
+    })
+}
 
-stationRouter.get('/list', async (req, res) => {
+stationRouter.get('/list', checkAdminOrPostman, async (req, res) => {
     try {
         const list = await getStationList();
         res.status(200).json(list).end();
@@ -34,7 +48,7 @@ stationRouter.get('/list', async (req, res) => {
 })
 
 
-stationRouter.post('/add', async (req, res) => {
+stationRouter.post('/add', checkAdmin,async (req, res) => {
     const stationInfo = req.body;
     try {
         const _ = await addNewStation(stationInfo);
@@ -44,7 +58,7 @@ stationRouter.post('/add', async (req, res) => {
     }
 })
 
-stationRouter.post('/alter', async (req, res) => {
+stationRouter.post('/alter', checkAdmin,async (req, res) => {
     const stationInfo = req.body;
     console.log(stationInfo);
     try {
@@ -55,7 +69,7 @@ stationRouter.post('/alter', async (req, res) => {
     }
 })
 
-stationRouter.post('/delete', async (req, res) => {
+stationRouter.post('/delete', checkAdmin,async (req, res) => {
     const stationInfo = req.body;
     try {
         const _ = await deleteStation(stationInfo);

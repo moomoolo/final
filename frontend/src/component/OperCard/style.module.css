@@ -1,0 +1,23 @@
+.card {
+    min-width: 130px;
+    min-height: 130px;
+    margin: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #cfcfcf;
+    border-radius: 8px;
+    background-color: #fff;
+    cursor: pointer;
+
+    font-size: 30px;
+    color: #777E90;
+}
+
+.card:hover {
+    border-color: #55A7FF;
+}
+
+.card:active {
+    border-color: #0162c9;
+}
