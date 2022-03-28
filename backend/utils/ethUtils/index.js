@@ -41,7 +41,6 @@ eth.createNewOrder = async (fromAddr, passwd, {
     recieverName,
     recieverPhone,
 }) => {
-    contract.options.address = fromAddr;
     let _ = await web3.eth.personal.unlockAccount(fromAddr, passwd);
     return await contract.methods.createOrder(
         fromStation,
@@ -52,7 +51,16 @@ eth.createNewOrder = async (fromAddr, passwd, {
         senderPhone,
         recieverName,
         recieverPhone,
-    ).send({ from: fromAddr });
+    ).send({ 
+        from: fromAddr,
+        gas: '3000000',
+        gasPrice: '2000000',
+    });
+}
+
+eth.getOrderDetailByHash = async (hash) => {
+    const res = await contract.methods.getOrderInfoByHash(hash).call({ from: coinbaseAddr });
+    return res;
 }
 
 module.exports = eth;

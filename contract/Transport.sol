@@ -19,8 +19,8 @@ struct OrderAction {
 }
 
 struct Order {
-    uint256 fromStation;
-    uint256 toStation;
+    bytes32 fromStation;
+    bytes32 toStation;
     string fromAddress;
     string toAddress;
     string senderName;
@@ -38,9 +38,10 @@ contract Transport {
 
     event NewOrder(bytes32 hash);
 
+    event TestEvent(uint256 res);
     function createOrder(
-        uint256 fromStation,
-        uint256 toStation,
+        bytes32 fromStation,
+        bytes32 toStation,
         string memory fromAddress,
         string memory toAddress,
         string memory senderName,
@@ -49,6 +50,7 @@ contract Transport {
         string memory recieverPhone
     ) public {
         // 新建订单
+        emit TestEvent(0x55);
         Order memory order = Order(
             fromStation,
             toStation,
@@ -76,6 +78,7 @@ contract Transport {
 
         order.hash = orderHash;
 
+        hashToOrder[orderHash] = order;
         phoneToOrder[senderPhone].push(order);
         phoneToOrder[recieverPhone].push(order);
         // TODO: 插入链表
@@ -83,96 +86,31 @@ contract Transport {
         emit NewOrder(orderHash);
     }
 
-
-    // 通过号码查询订单列表
-    // 获取收发站点信息
-    function getOrderStationInfoListByPhone(
-        string calldata phone
+    function getOrderInfoByHash(
+        bytes32 hash
     ) public view returns (
-        uint256[] memory,
-        uint256[] memory,
-        string[] memory,
-        string[] memory
+        bytes32 fromStation,
+        bytes32 toStation,
+        string memory fromAddress,
+        string memory toAddress,
+        string memory senderName,
+        string memory senderPhone,
+        string memory recieverName,
+        string memory recieverPhone,
+        uint256 createTime
     ) {
-        Order[] memory orders = phoneToOrder[phone];
-        uint length = orders.length;
-        
-        uint256[] memory fromStation = new uint256[](length);
-        uint256[] memory toStation = new uint256[](length);
-        string[] memory fromAddress = new string[](length);
-        string[] memory toAddress = new string[](length);
-
-        for (uint i = 0; i < length; i++) {
-            Order memory order = orders[i];
-            fromStation[i] = order.fromStation;
-            toStation[i] = order.toStation;
-            fromAddress[i] = order.fromAddress;
-            toAddress[i] = order.toAddress;
-        }
+        Order memory order = hashToOrder[hash];
 
         return (
-            fromStation,
-            toStation,
-            fromAddress,
-            toAddress
+            order.fromStation,
+            order.toStation,
+            order.fromAddress,
+            order.toAddress,
+            order.senderName,
+            order.senderPhone,
+            order.recieverName,
+            order.recieverPhone,
+            order.createTime
         );
     }
-
-    // 获取收发人员信息
-    function getOrderPeopleInfoListByPhone(
-        string calldata phone
-    ) public view returns (
-        string[] memory,
-        string[] memory,
-        string[] memory,
-        string[] memory
-    ) {
-        Order[] memory orders = phoneToOrder[phone];
-        uint length = orders.length;
-
-        string[] memory senderName = new string[](length);
-        string[] memory senderPhone = new string[](length);
-        string[] memory recieverName = new string[](length);
-        string[] memory recieverPhone = new string[](length);
-
-        for (uint i = 0; i < length; i++) {
-            Order memory order = orders[i];
-            senderName[i] = order.senderName;
-            senderPhone[i] = order.senderPhone;
-            recieverName[i] = order.recieverName;
-            recieverPhone[i] = order.recieverPhone;
-        }
-
-        return (
-            senderName,
-            senderPhone,
-            recieverName,
-            recieverPhone
-        );
-    }
-
-    // 获取其他信息
-    function getOrderOtherInfoListByPhone(
-        string calldata phone
-    ) public view returns (
-        uint256[] memory,
-        bytes32[] memory
-    ) {
-        Order[] memory orders = phoneToOrder[phone];
-        uint length = orders.length;
-
-        uint256[] memory createTime = new uint256[](length);
-        bytes32[] memory hash = new bytes32[](length);
-
-        for (uint i = 0; i < length; i++) {
-            Order memory order = orders[i];
-            createTime[i] = order.createTime;
-            hash[i] = order.hash;
-        }
-        return (
-            createTime,
-            hash
-        );
-    }
-
 }

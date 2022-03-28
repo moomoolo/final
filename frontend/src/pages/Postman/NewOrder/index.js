@@ -1,6 +1,6 @@
-import { Button, Form, Input, message, Select, Spin } from "antd";
+import { Button, Form, Input, message, Select, Spin, Descriptions } from "antd";
 import React, { useEffect, useState } from "react";
-import { getHeader } from "../../../common";
+import { getHeader, renderHashInTable } from "../../../common";
 import { api } from "../../../config";
 
 import styles from './style.module.css';
@@ -32,7 +32,6 @@ export default function NewOrder() {
       }
     })
   }, [])
-
   const onCreateOrder = () => {
     setDisable(true);
     fetch(api.NEW_ORDER_POST, {
@@ -41,9 +40,12 @@ export default function NewOrder() {
       body: JSON.stringify(info)
     }).then((res) => {
       if (res.status === 200) {
-        message.success('新建成功');
-        setFinish(true);
-        setWaiting(false);
+        res.json().then((data) => {
+          info.hash = data.orderHash;
+          message.success('新建成功');
+          setFinish(true);
+          setWaiting(false);
+        })
       } else {
         message.error('新建失败');
         setDisable(false);
@@ -113,35 +115,27 @@ export default function NewOrder() {
           </Form>
         )}
         {!waiting && finish && (
-        <Form labelCol={{ span: 8 }} wrapperCol={{ span: 24 }}>
-          <Form.Item label="寄件人">
-            <Input defaultValue={info.senderName} disabled/>
-          </Form.Item>
-          <Form.Item label="寄件人电话">
-            <Input defaultValue={info.senderPhone} disabled/>
-          </Form.Item>
-          <Form.Item label="寄件人地址">
-            <Input defaultValue={info.fromAddress} disabled/>
-          </Form.Item>
-          <Form.Item label="收件人">
-            <Input defaultValue={info.recieverName} disabled/>
-          </Form.Item>
-          <Form.Item label="收件人电话">
-            <Input defaultValue={info.recieverPhone} disabled/>
-          </Form.Item>
-          <Form.Item label="收件人地址">
-            <Input defaultValue={info.toAddress} disabled/>
-          </Form.Item>
-          <Form.Item label="寄件站点">
-            <Input defaultValue={stationList.filter((item) => {console.log(item); return item.id === info.fromStation })[0].name_str} disabled/>
-          </Form.Item>
-          <Form.Item label="收件站点">
-            <Input defaultValue={stationList.filter((item) => { return item.id === info.toStation })[0].name_str} disabled/>
-          </Form.Item>
-          <Form.Item wrapperCol={{ span: 24, offset: 8 }}>
-            <Button style={{ marginRight: '10px'}} onClick={() => {window.location.href='/postman/oper_list'}}>返回</Button>
-          </Form.Item>
-        </Form>
+        <>
+        <Descriptions 
+          bordered
+          column={1}
+        >
+          <Descriptions.Item label="订单号">{renderHashInTable(info.hash)}</Descriptions.Item>
+          <Descriptions.Item label="寄件人">{info.senderName}</Descriptions.Item>
+          <Descriptions.Item label="寄件人电话">{info.senderPhone}</Descriptions.Item>
+          <Descriptions.Item label="寄件人地址">{info.fromAddress}</Descriptions.Item>
+          <Descriptions.Item label="收件人">{info.recieverName}</Descriptions.Item>
+          <Descriptions.Item label="收件人电话">{info.recieverPhone}</Descriptions.Item>
+          <Descriptions.Item label="收件人地址">{info.toAddress}</Descriptions.Item>
+          <Descriptions.Item label="寄件站点">
+            {stationList.filter((item) => {console.log(item); return item.id === info.fromStation })[0]?.name_str}
+          </Descriptions.Item>
+          <Descriptions.Item label="收件站点">
+            {stationList.filter((item) => { return item.id === info.toStation })[0]?.name_str}
+          </Descriptions.Item>
+        </Descriptions>
+        <Button style={{ marginRight: '10px'}} onClick={() => {window.location.href='/postman/oper_list'}}>返回</Button>
+        </>
         )}
       </div>
   );

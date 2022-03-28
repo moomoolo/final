@@ -1,0 +1,22 @@
+.search {
+    max-width: 500px;
+    display: block;
+}
+
+.wrapper, .wrapper_detail {
+    margin: auto 20px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.wrapper_detail {
+    align-self: flex-start;
+    margin-top: 5px;
+}
+
+.desc {
+    background-color: #fff;
+}

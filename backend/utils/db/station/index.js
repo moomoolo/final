@@ -9,6 +9,12 @@ station.getStationList = async () => {
     return res;
 }
 
+station.getStationNameById = async (id) => {
+    const sql = `select name_str from stations where id='${id}';`;
+    const res = await queryPromise(sql);
+    return res[0].name_str;
+}
+
 station.alterStation = async ({ id, name_str, addr_str }) => {
     const sql = `update stations set
         name_str = '${name_str}',

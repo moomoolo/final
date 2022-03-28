@@ -16,7 +16,8 @@ const api = {
     ALTER_STATION_POST: BASE_URL + '/station/alter',
     DELETE_STATION_POST: BASE_URL + '/station/delete',
     // order
-    NEW_ORDER_POST: BASE_URL + '/order/new'
+    NEW_ORDER_POST: BASE_URL + '/order/new',
+    ORDER_DETAIL_GET: BASE_URL + '/order/detail/'
 };
 
 export { api };
