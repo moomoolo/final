@@ -3,6 +3,7 @@
 }
 
 .wrapper, .wrapper_detail {
+    background-color: #fff;
     flex-grow: 1;
     max-width: 500px;
     margin: auto 20px auto;
@@ -16,6 +17,10 @@
 .wrapper_detail {
     align-self: flex-start;
     margin-top: 5px;
+}
+
+.steps {
+    width: 100%;
 }
 
 .desc {

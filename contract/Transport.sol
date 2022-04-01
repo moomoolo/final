@@ -184,8 +184,10 @@ contract Transport {
     }
 
     function deliverOrder(
-        bytes32 hash
+        bytes32 hash,
+        bytes32 station
     ) public {
+        hashToActionList[hash].push(OrderAction(ActionType.DELIVER, station, station, msg.sender, block.timestamp));
         hashToOrder[hash].status = OrderStatus.TOEND;
     }
 
@@ -262,7 +264,8 @@ contract Transport {
         string memory receiverName,
         string memory receiverPhone,
         uint256 createTime,
-        OrderStatus status
+        OrderStatus status,
+        bytes32 curStation
     ) {
         Order memory order = hashToOrder[hash];
 
@@ -276,7 +279,8 @@ contract Transport {
             order.receiverName,
             order.receiverPhone,
             order.createTime,
-            order.status
+            order.status,
+            hashToStation[order.hash]
         );
     }
 }

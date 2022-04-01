@@ -68,6 +68,11 @@ config.contractAbi = [
 				"internalType": "bytes32",
 				"name": "hash",
 				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "station",
+				"type": "bytes32"
 			}
 		],
 		"name": "deliverOrder",
@@ -191,6 +196,11 @@ config.contractAbi = [
 				"internalType": "enum OrderStatus",
 				"name": "status",
 				"type": "uint8"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "curStation",
+				"type": "bytes32"
 			}
 		],
 		"stateMutability": "view",
@@ -253,6 +263,6 @@ config.contractAbi = [
 	}
 ]
 
-config.contractAddr = '0xa7a68E905418f16fA00EcDd2b17Eb89b7bf7ec93';
+config.contractAddr = '0xA952D367F7789bd630b0Ffe108f181a717EA972c';
 
 module.exports = config;

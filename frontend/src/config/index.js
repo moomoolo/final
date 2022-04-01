@@ -26,6 +26,7 @@ const api = {
     RECEIVE_ORDER_POST: BASE_URL + '/order/receive',
     DELIVER_ORDER_POST: BASE_URL + '/order/deliver',
     END_ORDER_POST: BASE_URL + '/order/end',
+    ORDER_ACTIONS_GET: BASE_URL + '/order/actions/',
 };
 
 export { api };

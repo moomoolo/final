@@ -1,8 +1,8 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../config');
-const { getUserEthInfoById, getStationNameById } = require('../utils/db');
-const { createNewOrder, getOrderDetailByHash, getStationOrderToReceive, getStationOrderToSend, sendOrder, receiveOrder, getStationOrderToDeliver, getStationOrderToEnd, deliverOrder, endOrder } = require('../utils/ethUtils');
+const { getUserEthInfoById, getStationNameById, getUserInfoById, getUserNameByAddress } = require('../utils/db');
+const { createNewOrder, getOrderDetailByHash, getStationOrderToReceive, getStationOrderToSend, sendOrder, receiveOrder, getStationOrderToDeliver, getStationOrderToEnd, deliverOrder, endOrder, getOrderActionsByHash } = require('../utils/ethUtils');
 const orderRouter = express.Router();
 
 const checkPostman = async (req, res, next) => {
@@ -47,6 +47,7 @@ orderRouter.get('/detail/:hash', async (req, res) => {
         // 转换站点列表
         orderDetail.fromStationStr = await getStationNameById(orderDetail.fromStation);
         orderDetail.toStationStr = await getStationNameById(orderDetail.toStation);
+        orderDetail.curStationStr = await getStationNameById(orderDetail.curStation);
         res.status(200).json(orderDetail).end();
     } catch(err) {
         console.log(err);
@@ -147,7 +148,7 @@ async (req, res) => {
         const { id } = jwt.verify(token, jwtSecret);
         const { address, private_key } = await getUserEthInfoById(id);
         const { hash, station } = info;
-        let _ = await deliverOrder(address, private_key, hash);
+        let _ = await deliverOrder(address, private_key, hash, station);
         res.status(200).end();
     } catch(err) {
         res.status(400).json(err).end();
@@ -170,5 +171,29 @@ async (req, res) => {
         res.status(400).json(err).end();
     }
 })
+
+const formatAction = async (input) => {
+    const action = {...input};
+    action.fromStationStr = await getStationNameById(action.fromStation);
+    action.toStationStr = await getStationNameById(action.toStation);
+    action.operatorStr = await getUserNameByAddress(action.operator);
+    const date = new Date(action.time * 1000);
+    action.timeStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+    return action;
+}
+
+orderRouter.get('/actions/:hash', async (req, res) => {
+    try {
+        const hash = req.params.hash;
+        const actions = await getOrderActionsByHash(hash);
+        const actionList = await Promise.all(actions.map((item) => {
+            return formatAction(item);
+        }))
+        res.status(200).json(actionList).end();
+    } catch(err) {
+        res.status(400).json(err).end();
+    }
+})
+
 
 module.exports = orderRouter;

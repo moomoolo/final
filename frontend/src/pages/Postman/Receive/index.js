@@ -116,6 +116,7 @@ export default function Send() {
       }
     });
   }
+  refreshOutside = refresh;
 
   useEffect(() => {
     refresh();

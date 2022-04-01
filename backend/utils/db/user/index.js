@@ -20,6 +20,12 @@ user.getUserInfoById = async (id) => {
     return res[0];
 }
 
+user.getUserNameByAddress = async (address) => {
+    const sql = `select name_str from users where address = '${address}';`;
+    const res = await queryPromise(sql);
+    return res[0]?.name_str;
+}
+
 user.getUserList = async () => {
     const sql = `select id, name_str, role_str, address, passwd, station from users;`;
     const res = await queryPromise(sql);

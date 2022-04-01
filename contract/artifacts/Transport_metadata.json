@@ -72,6 +72,11 @@
 						"internalType": "bytes32",
 						"name": "hash",
 						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "station",
+						"type": "bytes32"
 					}
 				],
 				"name": "deliverOrder",
@@ -195,6 +200,11 @@
 						"internalType": "enum OrderStatus",
 						"name": "status",
 						"type": "uint8"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "curStation",
+						"type": "bytes32"
 					}
 				],
 				"stateMutability": "view",
@@ -284,11 +294,11 @@
 	},
 	"sources": {
 		"Transport.sol": {
-			"keccak256": "0x257f4905675ea289590bf18094193e4e9ec7fefb1752fc3f88e9d948b809d3b2",
+			"keccak256": "0xfa2bc3cc8e57ad4e8fdcc6b573f60329a72f73981d2ba7f76256ddc3023ee806",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://cecd0f00f49c938cd5899c01836730cb57ab1249501b1c22b1ed3b2c38c4e012",
-				"dweb:/ipfs/QmXKBa3wLe52UPNeCnDnBquqwWewzbeZv6mDKin4uRDfUr"
+				"bzz-raw://255f347f7d8430a1f4d2ef19824f733926c66fe4589065e7323a277039887f8d",
+				"dweb:/ipfs/QmcJNQJ6iMiVeBu2ieC94Rf3iSNHVKQrpWpHNgVstu5G2g"
 			]
 		}
 	},

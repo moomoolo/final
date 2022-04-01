@@ -65,6 +65,21 @@ const columns = [
     render: renderStation
   },
   {
+    title: '收件人',
+    dataIndex: 'receiverName',
+    key: 'receiverName',
+  },
+  {
+    title: '收件地址',
+    dataIndex: 'toAddress',
+    key: 'receiverAddress',
+  },
+  {
+    title: '收件人电话',
+    dataIndex: 'receiverPhone',
+    key: 'receiverPhone',
+  },
+  {
     title: '操作',
     dataIndex: 'oper',
     key: 'oper',

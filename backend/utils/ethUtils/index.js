@@ -135,7 +135,8 @@ eth.getOrderActionsByHash = async (hash) => {
         '0': 'START',
         '1': 'RECEIVE',
         '2': 'SEND',
-        '3': 'END',
+        '3': 'DELIVER',
+        '4': 'END',
     }
     for (let i = 0; i  < res[0].length; i++) {
         actionList.push({
@@ -171,10 +172,10 @@ eth.receiveOrder = async (addr, privateKey, hash, station) => {
     return true;
 }
 
-eth.deliverOrder = async (addr, privateKey, hash) => {
+eth.deliverOrder = async (addr, privateKey, hash, station) => {
     let _ = await web3.eth.personal.importRawKey(privateKey, 'passwd');
     _ = await web3.eth.personal.unlockAccount(addr, 'passwd');
-    const res = await contract.methods.deliverOrder(hash).send({
+    const res = await contract.methods.deliverOrder(hash, station).send({
         from: addr,
         gasPrice: "20000000000",
         gas: "3000000",
