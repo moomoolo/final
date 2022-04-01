@@ -15,19 +15,6 @@ config.contractAbi = [
 		"type": "event"
 	},
 	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "res",
-				"type": "uint256"
-			}
-		],
-		"name": "TestEvent",
-		"type": "event"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "bytes32",
@@ -73,6 +60,76 @@ config.contractAbi = [
 		"name": "createOrder",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "hash",
+				"type": "bytes32"
+			}
+		],
+		"name": "deliverOrder",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "hash",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "station",
+				"type": "bytes32"
+			}
+		],
+		"name": "endOrder",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "hash",
+				"type": "bytes32"
+			}
+		],
+		"name": "getOrderActionList",
+		"outputs": [
+			{
+				"internalType": "enum ActionType[]",
+				"name": "",
+				"type": "uint8[]"
+			},
+			{
+				"internalType": "bytes32[]",
+				"name": "",
+				"type": "bytes32[]"
+			},
+			{
+				"internalType": "bytes32[]",
+				"name": "",
+				"type": "bytes32[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -129,13 +186,73 @@ config.contractAbi = [
 				"internalType": "uint256",
 				"name": "createTime",
 				"type": "uint256"
+			},
+			{
+				"internalType": "enum OrderStatus",
+				"name": "status",
+				"type": "uint8"
 			}
 		],
 		"stateMutability": "view",
 		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "station",
+				"type": "bytes32"
+			}
+		],
+		"name": "getStationOrderHashList",
+		"outputs": [
+			{
+				"internalType": "bytes32[]",
+				"name": "",
+				"type": "bytes32[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "hash",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "station",
+				"type": "bytes32"
+			}
+		],
+		"name": "receiveOrder",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "hash",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "toStation",
+				"type": "bytes32"
+			}
+		],
+		"name": "sendOrder",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	}
 ];
 
-config.contractAddr = '0x948D2A73deAc3F6A3783ec3e161E820f159feADe';
+config.contractAddr = '0x285e65489C6Aec3c508Ea9C59b51Eec7925B5800';
 
 module.exports = config;

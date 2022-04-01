@@ -59,11 +59,11 @@ userRouter.post('/add', async (req, res) => {
         } else {
             // 创建geth账户新密码
             const eth_passwd = Web3.utils.randomHex(20);
-            const address = await addNewAccount(eth_passwd);
+            const { address, privateKey: private_key } = await addNewAccount(eth_passwd);
             userInfo = {
                 ...userInfo,
-                eth_passwd,
                 address,
+                private_key
             };
             const _ = await addUser(userInfo);
             res.status(200).end();

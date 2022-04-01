@@ -15,7 +15,7 @@ user.getUserRoleStr = async (id) => {
 }
 
 user.getUserInfoById = async (id) => {
-    const sql = `select role_str, name_str from users where id='${id}';`;
+    const sql = `select role_str, name_str, station from users where id='${id}';`;
     const res = await queryPromise(sql);
     return res[0];
 }
@@ -52,14 +52,14 @@ user.checkUser = async({ id }) => {
 }
 
 // 需配合checkUser使用
-user.addUser = async ({ id, passwd, role_str, name_str, address, eth_passwd, station }) => {
+user.addUser = async ({ id, passwd, role_str, name_str, address, private_key, station }) => {
     const sql = `insert into users values (
         '${id}',
         '${passwd}',
         '${name_str}',
         '${address}',
         '${role_str}',
-        '${eth_passwd}',
+        '${private_key}',
         '${station}'
     );`
     const res = await queryPromise(sql);
@@ -67,7 +67,7 @@ user.addUser = async ({ id, passwd, role_str, name_str, address, eth_passwd, sta
 
 user.getUserEthInfoById = async (id) => {
     console.log('getting eth info');
-    const sql = `select address, eth_passwd from users where id = '${id}';`;
+    const sql = `select address, private_key from users where id = '${id}';`;
     console.log(sql);
     const res = await queryPromise(sql);
     console.log(res)
