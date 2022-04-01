@@ -1,6 +1,5 @@
-import { Descriptions, Input, message } from 'antd'
+import { Descriptions, Input, message, Steps } from 'antd'
 import React, { useState } from 'react'
-import { renderHashInTable } from '../../common';
 
 import PageLayoutWithContent from '../../component/PageLayoutWithContent'
 import { api } from '../../config';
@@ -36,20 +35,25 @@ export default function Home() {
           onSearch={onSearch}
         />
         { detail && (
-          <Descriptions
-            column={2}
-            bordered
-            className={styles.desc}
-          >
-            <Descriptions.Item label="寄件人">{detail.senderName}</Descriptions.Item>
-            <Descriptions.Item label="寄件人电话">{detail.senderPhone}</Descriptions.Item>
-            <Descriptions.Item label="寄件人地址">{detail.fromAddress}</Descriptions.Item>
-            <Descriptions.Item label="收件人">{detail.recieverName}</Descriptions.Item>
-            <Descriptions.Item label="收件人电话">{detail.recieverPhone}</Descriptions.Item>
-            <Descriptions.Item label="收件人地址">{detail.toAddress}</Descriptions.Item>
-            <Descriptions.Item label="寄件站点">{detail.fromStationStr}</Descriptions.Item>
-            <Descriptions.Item label="收件站点">{detail.toStationStr}</Descriptions.Item>
-          </Descriptions>
+          <>
+            <Descriptions
+              column={2}
+              bordered
+              className={styles.desc}
+            >
+              <Descriptions.Item label="寄件人">{detail.senderName}</Descriptions.Item>
+              <Descriptions.Item label="寄件人电话">{detail.senderPhone}</Descriptions.Item>
+              <Descriptions.Item label="寄件人地址">{detail.fromAddress}</Descriptions.Item>
+              <Descriptions.Item label="收件人">{detail.recieverName}</Descriptions.Item>
+              <Descriptions.Item label="收件人电话">{detail.recieverPhone}</Descriptions.Item>
+              <Descriptions.Item label="收件人地址">{detail.toAddress}</Descriptions.Item>
+              <Descriptions.Item label="寄件站点">{detail.fromStationStr}</Descriptions.Item>
+              <Descriptions.Item label="收件站点">{detail.toStationStr}</Descriptions.Item>
+            </Descriptions>
+            <Steps>
+              
+            </Steps>
+          </>
         )}
       </div>
     </PageLayoutWithContent>

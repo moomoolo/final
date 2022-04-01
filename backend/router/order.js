@@ -57,13 +57,13 @@ orderRouter.get('/detail/:hash', async (req, res) => {
 orderRouter.get('/receive/:station',
 checkPostman,
 async (req, res) => {
-    try{
+    // try{
         const station = req.params.station;
         const list = await getStationOrderToReceive(station);
         res.status(200).json(list).end();
-    } catch(err) {
-        res.status(400).json(err).end();
-    }
+    // } catch(err) {
+    //     res.status(400).json(err).end();
+    // }
 })
 
 orderRouter.get('/send/:station',

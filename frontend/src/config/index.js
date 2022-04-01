@@ -17,7 +17,15 @@ const api = {
     DELETE_STATION_POST: BASE_URL + '/station/delete',
     // order
     NEW_ORDER_POST: BASE_URL + '/order/new',
-    ORDER_DETAIL_GET: BASE_URL + '/order/detail/'
+    ORDER_DETAIL_GET: BASE_URL + '/order/detail/',
+    ORDER_TO_RECEIVE_GET: BASE_URL + '/order/receive/',
+    ORDER_TO_SEND_GET: BASE_URL + '/order/send/',
+    ORDER_TO_DELIVER_GET: BASE_URL + '/order/deliver/',
+    ORDER_TO_END_GET: BASE_URL + '/order/end/',
+    SEND_ORDER_POST: BASE_URL + '/order/send',
+    RECEIVE_ORDER_POST: BASE_URL + '/order/receive',
+    DELIVER_ORDER_POST: BASE_URL + '/order/deliver',
+    END_ORDER_POST: BASE_URL + '/order/end',
 };
 
 export { api };

@@ -48,12 +48,12 @@ config.contractAbi = [
 			},
 			{
 				"internalType": "string",
-				"name": "recieverName",
+				"name": "receiverName",
 				"type": "string"
 			},
 			{
 				"internalType": "string",
-				"name": "recieverPhone",
+				"name": "receiverPhone",
 				"type": "string"
 			}
 		],
@@ -174,12 +174,12 @@ config.contractAbi = [
 			},
 			{
 				"internalType": "string",
-				"name": "recieverName",
+				"name": "receiverName",
 				"type": "string"
 			},
 			{
 				"internalType": "string",
-				"name": "recieverPhone",
+				"name": "receiverPhone",
 				"type": "string"
 			},
 			{
@@ -251,8 +251,8 @@ config.contractAbi = [
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
-];
+]
 
-config.contractAddr = '0x285e65489C6Aec3c508Ea9C59b51Eec7925B5800';
+config.contractAddr = '0xa7a68E905418f16fA00EcDd2b17Eb89b7bf7ec93';
 
 module.exports = config;
